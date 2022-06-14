@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Storage} from '@capacitor/storage';
+import { Storage } from '@capacitor/storage';
 
 //INTERFACE
 export interface NoteInterface {
@@ -8,7 +8,9 @@ export interface NoteInterface {
   note: string;
   titre: string;
   texte: string;
-  photo?: object;
+  lat;
+  long;
+  photo?: Array<object>;
 }
 //MODEL
 export class NoteModel implements NoteInterface {
@@ -17,7 +19,10 @@ export class NoteModel implements NoteInterface {
   note: string;
   titre: string;
   texte: string;
-  photo?: object;
+  lat;
+  long;
+  photo: Array<object>;
+
 
   constructor(data: NoteInterface = null){
     if(data){
@@ -26,6 +31,8 @@ export class NoteModel implements NoteInterface {
       this.note = data.note;
       this.titre = data.titre;
       this.texte = data.texte;
+      this.lat = data.lat;
+      this.long = data.long;
       this.photo = data.photo;
     }
     if(! this.id){
@@ -34,9 +41,7 @@ export class NoteModel implements NoteInterface {
   }
 }
 
-
 const STORAGE_KEY = 'Notes';
-
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +56,10 @@ export class NoteService {
         this.noteList = JSON.parse(data.value) || [];
       }
     );
+  }
+
+  public getData(){
+    return Storage.get({key: STORAGE_KEY});
   }
 
   addNewNote(note){

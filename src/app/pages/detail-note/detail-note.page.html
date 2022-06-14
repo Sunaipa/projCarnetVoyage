@@ -6,7 +6,7 @@
 
 <ion-content>
 
-  <ion-back-button default-href="/tabs" slot="start"></ion-back-button>
+  <ion-back-button default-href="/tabs"></ion-back-button>
 
   <ion-grid>
     <ion-row>
@@ -33,7 +33,13 @@
     </ion-row>
     <ion-row>
       <ion-col size="6" *ngFor="let photo of note.photo">
-        <ion-img src="{{photo}}"></ion-img>
+        <ion-img src='data:image/jpeg;base64,{{photo.base64String}}'></ion-img>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        {{note.lat}}, {{note.long}}
       </ion-col>
     </ion-row>
   </ion-grid>

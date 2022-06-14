@@ -4,9 +4,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
   <h3>TEST</h3>
-
+  <form [formGroup]="noteForm">
     <ion-grid>
       <ion-row>
         <ion-col size="6">
@@ -26,7 +26,7 @@
         <ion-col size="12">
           <ion-item>
             <ion-label>Titre</ion-label>
-            <ion-text formControlName="titre"></ion-text>
+            <ion-input type="text" formControlName="titre"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -39,21 +39,32 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-button slot="left" (click)="addPhotoToForm()">Ajouter une photo</ion-button>
+        <ion-button expand="block" (click)="takePicture()">Ajouter une photo</ion-button>
       </ion-row>
+        <ion-row>
+          <ion-col *ngFor="let photo of listPhoto">
+            <ion-avatar>
+              <ion-img src='data:image/jpeg;base64,{{ photo.base64String }}'></ion-img>
+            </ion-avatar>
+            <ion-button (click)="suppPhotoToForm(photo)">Supprimer</ion-button>
+          </ion-col>
+        </ion-row>
+
+<!--      <ion-row>-->
+<!--        <ion-col size="4">-->
+<!--          <ion-item>-->
+<!--            <ion-img  name="image" >TODO</ion-img>-->
+<!--            <ion-button (click)="suppPhotoToForm()">Supprimer</ion-button>-->
+<!--          </ion-item>-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
       <ion-row>
-        <ion-col size="4" *ngFor="let photo in photoList">
-          <ion-item>
-            <ion-img>TODO</ion-img>
-            <ion-button (click)="suppPhotoToForm()">Supprimer</ion-button>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-button expand="block" (click)="addPhotoToForm()" [hidden]="noteForm.pristine">
-          Ajouter une photo
+        <ion-button expand="block" (click)="onAddNote()" [hidden]="noteForm.pristine">
+          Valider
         </ion-button>
       </ion-row>
     </ion-grid>
+  </form>
+
 
 </ion-content>
